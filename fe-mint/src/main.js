@@ -5,9 +5,9 @@ import Mint from 'mint-ui';
 
 Vue.use(Mint);
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = true;
 
 new Vue({
-  router,
-  render: h => h(App),
+    router,
+    render: h => h(App),
 }).$mount('#app');

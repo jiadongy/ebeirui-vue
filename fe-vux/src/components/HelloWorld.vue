@@ -87,12 +87,13 @@
 </template>
 
 <script>
+import { Group, Cell } from 'vux'
 export default {
-  import {X-Input} from 'vux'
   name: 'HelloWorld',
   componets:{
-    X-Input
-  }
+    Group,
+    Cell
+  },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'

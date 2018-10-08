@@ -115,21 +115,64 @@
                             :value="eb.begin_date"
                             label="起始日期"
                             left-icon="<!--contact-->"
+                            @focus="popupDatePicker(eb.begin_date)"
                     />
 
                     <van-field
                             :value="eb.end_date"
                             label="截止日期"
                             left-icon="<!--contact-->"
+                            @focus="popupDatePicker(eb.end_date)"
                     />
+                    <van-popup v-model="showDatePicker" position="bottom">
+                        <van-datetime-picker
+                                type="date"
+                                :max-date="new Date()"
+                                @confirm="showDatePicker=false"
+                                @cancel="showDatePicker=false"
+                        />
+                    </van-popup>
                 </van-cell-group>
 
                 <van-cell>实习经历</van-cell>
+
+                <van-cell-group v-for="(ie,index) in form.internship_experience"
+                                :key="String(index)"
+                                :label="'实习经历'+String(index)"
+                                :name="String(index)">
+
+                    <van-field
+                            :value="ie.company"
+                            label="机构"
+                            left-icon="<!--contact-->"
+                    />
+
+                    <van-field
+                            :value="ie.department"
+                            label="部门"
+                            left-icon="<!--contact-->"
+                    />
+
+                    <van-field
+                            :value="ie.begin_date"
+                            label="起始日期"
+                            left-icon="<!--contact-->"
+                    />
+
+                    <van-field
+                            :value="ie.end_date"
+                            label="截止日期"
+                            left-icon="<!--contact-->"
+                    />
+                </van-cell-group>
+
             </van-cell-group>
 
             <van-button type="default" v-if="activeStepIndex>0" @click="activeStepIndex--">上一步</van-button>
             <van-button type="primary" v-if="activeStepIndex<2" @click="activeStepIndex++">下一步</van-button>
             <van-button type="primary" v-if="activeStepIndex===2">提交</van-button>
+
+
         </div>
 
         <van-tabbar v-model="activePageIndex" fixed style="position: fixed">
@@ -145,6 +188,12 @@
 
     export default {
         name: "Competitive",
+        methods: {
+            popupDatePicker(v_model) {
+                //this.currentDateVModel= v_model
+                this.showDatePicker = true
+            }
+        },
         data() {
             return {
                 activePageIndex: 0,
@@ -153,8 +202,11 @@
                 showSexOptions: false,
                 showNativePlaceOptions: false,
                 showPoliticalBackgroundOptions: false,
-                showEBOptions:false,
-                showIEOptions:false,
+                showEBOptions: false,
+                showIEOptions: false,
+
+                showDatePicker: false,
+                currentDateVModel:new Date(),
 
                 form: {
                     name: "金农",

@@ -6,6 +6,11 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+import { AlertPlugin, ToastPlugin } from 'vux'
+
+Vue.use(AlertPlugin)
+Vue.use(ToastPlugin)
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

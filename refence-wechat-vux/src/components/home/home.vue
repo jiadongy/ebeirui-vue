@@ -36,7 +36,7 @@
 				<!-- 分隔块3 -->
   				<div class="recent-interval"></div>
 			</div>
-			<!-- <infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore"/> -->
+			 <infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore"/>
 		</div>
 		<div v-else>
 			<mine></mine>

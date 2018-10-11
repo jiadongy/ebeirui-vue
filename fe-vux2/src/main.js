@@ -4,13 +4,20 @@ import Vue from 'vue'
 import FastClick from 'fastclick'
 import VueRouter from 'vue-router'
 import App from './App'
-import Home from './components/HelloFromVux'
+import WxHome from './components/home/wxHome'
+import CompetitiveForm from './components/competitive/mainForm'
+import { TransferDom } from 'vux'
+
+Vue.directive('transfer-dom', TransferDom)
 
 Vue.use(VueRouter)
 
 const routes = [{
   path: '/',
-  component: Home
+  component: WxHome
+}, {
+  path: '/cc',
+  component: CompetitiveForm
 }]
 
 const router = new VueRouter({

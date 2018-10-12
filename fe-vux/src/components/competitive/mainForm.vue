@@ -27,7 +27,7 @@
       </group>
     </div>
     <div v-show="step===1">
-      <toast v-model="toShowTip[step]" :time="2000" type="text">tips \n 左滑可以删除</toast>
+      <toast v-model="toShowTip[step]" :time="2000" type="text" width="15em">tips 左滑可以删除</toast>
       <div v-for="(item,index) in form.education_background">
         <group-title>第 {{index+1}} 份教育背景</group-title>
         <swipeout>
@@ -150,6 +150,9 @@
       <alert v-model="showResult" :title="resultScore>0?'Wow~':'Sorry~'">
         {{resultScore>0?('您的求职竞争力为'+resultScore):'服务器开小差去了' }}
       </alert>
+      <toast v-model="showResult" :time="2000" type="text" width="15em">
+        {{resultScore>0?('您的求职竞争力为'+resultScore):'服务器开小差去了' }}
+      </toast>
     </div>
   </div>
 </template>

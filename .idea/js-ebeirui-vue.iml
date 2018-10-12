@@ -3,6 +3,13 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/fe-element" />
+      <excludeFolder url="file://$MODULE_DIR$/fe-mint" />
+      <excludeFolder url="file://$MODULE_DIR$/fe-vant" />
+      <excludeFolder url="file://$MODULE_DIR$/fe-vux2" />
+      <excludeFolder url="file://$MODULE_DIR$/refence-vant-dev" />
+      <excludeFolder url="file://$MODULE_DIR$/refence-vuetify-md" />
+      <excludeFolder url="file://$MODULE_DIR$/refence-wechat-vux" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
     </content>

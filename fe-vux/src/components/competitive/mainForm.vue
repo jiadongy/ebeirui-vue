@@ -4,48 +4,44 @@
     <!--<marquee-item v-for="i in 5" :key="i" class="align-left">hello world {{i}}</marquee-item>-->
     <!--</marquee>-->
     <br>
-    <step v-model="step" background-color='#fbf9fe' gutter="20px">
-      <step-item title="个人"></step-item>
-      <step-item title="教育"></step-item>
-      <step-item title="实习"></step-item>
-      <step-item title="证书"></step-item>
-      <step-item title="性格"></step-item>
+    <step v-model="step" background-color='#fbf9fe'>
+      <step-item title="基本信息" description=""></step-item>
+      <step-item title="教育背景"></step-item>
+      <step-item title="实习经历"></step-item>
+      <step-item title="证书奖励"></step-item>
+      <step-item title="未来目标"></step-item>
     </step>
     <!--<x-hr v-if="step>=0||step<=2"></x-hr>-->
     <div v-show="step===0">
-      <group>
-        <x-input title="姓名" v-model="form.name"></x-input>
-        <selector v-model="form.sex" title="性别" :options="options.sex_options"></selector>
+      <group label-width="5.5em">
+        <x-input title="姓名" v-model="form.name"  is-type="china-name" required></x-input>
+        <selector title="性别" v-model="form.sex"  :options="options.sex_options"></selector>
         <cell title="年龄">
-          <inline-x-number style="display:block;" v-model="form.age" :min="20" :max="35" width="50px"
-                           button-style="round"></inline-x-number>
+          <inline-x-number style="display:block;" v-model="form.age" :min="20" :max="35" width="50px" button-style="round"></inline-x-number>
         </cell>
-        <selector v-model="form.native_place" title="籍贯" :options="options.native_place_options"></selector>
-        <selector v-model="form.politicial_background" title="政治背景"
-                  :options="options.politicial_background_options"></selector>
-        <x-input title="联系方式" v-model="form.contact"></x-input>
+        <selector title="籍贯" v-model="form.native_place"  :options="options.native_place_options"></selector>
+        <selector title="政治背景" v-model="form.politicial_background" :options="options.politicial_background_options"></selector>
+        <x-input title="联系方式" v-model="form.contact" required :is-type="isEmailOrChinaPhone"></x-input>
       </group>
     </div>
     <div v-show="step===1">
-      <toast v-model="toShowTip[step]" :time="2000" type="text" width="15em">tips 左滑可以删除</toast>
-      <div v-for="(item,index) in form.education_background">
+      <toast v-model="toShowTip[step]" :time="1500" type="text" width="12em">左滑可以删除哦</toast>
+      <div v-for="(item,index) in form.education_background" :key="index">
         <group-title>第 {{index+1}} 份教育背景</group-title>
-        <swipeout>
-          <swipeout-item transition-mode="follow" :key="index">
+        <swipeout style="margin-top: -1.2em">
+          <swipeout-item transition-mode="follow">
             <div slot="right-menu">
               <!--<swipeout-button @click.native="form.education_background.push({})" type="primary">增加</swipeout-button>-->
               <swipeout-button @click.native="form.education_background.splice(index,1)" type="warn">删除
               </swipeout-button>
             </div>
-            <div slot="content" class="demo-content vux-1px-t">
-              <group>
-                <selector v-model="item.degree" title="学历" :options="options.degree_options"></selector>
-                <datetime v-model="item.begin_date" :start-date="'2000-01-01'" format="YYYY-MM-DD" @on-change=""
-                          title="开始日期"></datetime>
-                <datetime v-model="item.end_date" :start-date="'2000-01-01'" format="YYYY-MM-DD" @on-change=""
-                          title="结束日期"></datetime>
+            <div slot="content" class="vux-1px-t">
+              <group label-width="5.5em">
+                <selector title="学历" v-model="item.degree"  :options="options.degree_options"></selector>
+                <datetime title="开始日期" v-model="item.begin_date" start-date="2000-01-01" :end-date="new Date().toISOString().substring(0, 10)" format="YYYY-MM-DD" ></datetime>
+                <datetime title="结束日期" v-model="item.end_date" start-date="2000-01-01" :end-date="new Date().toISOString().substring(0, 10)" format="YYYY-MM-DD" ></datetime>
                 <cell title="学校" v-model="item.university" is-link @click.native="showSearchUniversity[index]=true"/>
-                <selector v-model="item.major" title="专业" :options="options.major_options"></selector>
+                <selector title="专业" v-model="item.major" :options="options.major_options"></selector>
               </group>
             </div>
           </swipeout-item>
@@ -60,28 +56,23 @@
         </div>
         <br>
       </div>
-      <x-button @click.native="form.education_background.push({})" type="primary">新增教育背景</x-button>
+      <x-button @click.native="form.education_background.push({degree:0})" plain="true" >新增教育背景</x-button>
     </div>
     <div v-show="step===2">
-      <div v-for="(item,index) in form.internship_experience">
+      <div v-for="(item,index) in form.internship_experience" :key="index">
         <group-title>第 {{index+1}} 份实习经历</group-title>
-        <swipeout>
+        <swipeout style="margin-top: -1.2em">
           <swipeout-item transition-mode="follow">
             <div slot="right-menu">
-              <swipeout-button @click.native="form.internship_experience.splice(index,1)" type="warn">删除
-              </swipeout-button>
+              <swipeout-button @click.native="form.internship_experience.splice(index,1)" type="warn">删除</swipeout-button>
             </div>
-            <div slot="content" class="demo-content vux-1px-t">
-              <group>
-                <datetime v-model="item.begin_date" :start-date="'2000-01-01'" format="YYYY-MM-DD" @on-change=""
-                          title="开始日期"></datetime>
-                <datetime v-model="item.end_date" :start-date="'2000-01-01'" format="YYYY-MM-DD" @on-change=""
-                          title="结束日期"></datetime>
+            <div slot="content" class="vux-1px-t">
+              <group label-width="5.5em">
+                <datetime title="开始日期" v-model="item.begin_date" start-date="2000-01-01" :end-date="new Date().toISOString().substring(0, 10)" format="YYYY-MM-DD" ></datetime>
+                <datetime  title="结束日期" v-model="item.end_date" start-date="'2000-01-01'" :end-date="new Date().toISOString().substring(0, 10)" format="YYYY-MM-DD"></datetime>
                 <cell title="公司" v-model="item.company" is-link @click.native="showSearchCompany[index]=true"/>
-                <selector v-model="item.type" title="类型" :readonly="item.type.length!==0"
-                          :options="Object.keys(departments)"></selector>
-                <selector v-model="item.department" title="部门" :options="getDepartmentByCompanyType(item.type)"
-                          v-show="item.type.length!==0"></selector>
+                <selector title="类型" v-model="item.type"  :readonly="item.type.length!==0" :options="Object.keys(departments)"></selector>
+                <selector v-model="item.department" title="部门" :options="getDepartmentByCompanyType(item.type)" v-show="item.type.length!==0"></selector>
               </group>
             </div>
           </swipeout-item>
@@ -94,12 +85,12 @@
           </popup>
         </div>
       </div>
-      <x-button @click.native="form.internship_experience.push({})" type="primary">新增实习经历</x-button>
+      <x-button @click.native="form.internship_experience.push({})" plain="true">新增实习经历</x-button>
     </div>
     <div v-show="step===3">
       <divider>证书类</divider>
       <checker v-model="form.certificate" type="checkbox" default-item-class="demo1-item"
-               selected-item-class="demo1-item-selected">
+               selected-item-class="demo1-item-selected"  >
         <checker-item v-for="(value,key,index) in options.certificate_map" :key="index" :value="value">{{key}}
         </checker-item>
       </checker>
@@ -142,17 +133,9 @@
     </div>
     <x-hr></x-hr>
     <div class="btn_wrap">
-      <x-button v-show="step>0" @click.native="step--">上一步</x-button>
-      <x-button type="primary" v-show="step<4" @click.native="toShowTip[step]=false;step++">下一步</x-button>
       <x-button type="primary" v-show="step===4" @click.native="submit">提交</x-button>
-    </div>
-    <div v-transfer-dom>
-      <alert v-model="showResult" :title="resultScore>0?'Wow~':'Sorry~'">
-        {{resultScore>0?('您的求职竞争力为'+resultScore):'服务器开小差去了' }}
-      </alert>
-      <toast v-model="showResult" :time="2000" type="text" width="15em">
-        {{resultScore>0?('您的求职竞争力为'+resultScore):'服务器开小差去了' }}
-      </toast>
+      <x-button type="primary" v-show="step<4" @click.native="toShowTip[step]=false;step++">下一步</x-button>
+      <x-button v-show="step>0" @click.native="step--">上一步</x-button>
     </div>
   </div>
 </template>
@@ -630,12 +613,11 @@
           '外语', '历史', '中文', '艺术类', '社会学', '心理学', '其他文史类专业',
         ],
         certificate_map: {
-          'CPA全科': 0, 'CFA三级': 1, '北美精算师': 2, 'CPA三级部分': 3, 'CFA一级或二级': 4, 'FRM': 5, '司法考试': 6,
+          'CPA全科': 0, 'CFA三级': 1, '北美精算师': 2, 'CFA三级部分': 3, 'CFA一级或二级': 4, 'FRM': 5, '司法考试': 6,
           '证券从业资格': 7, '银行从业资格': 8, '基金从业资格': 9, '期货从业资格': 10, '保险从业资格': 11,
-          '计算机二级': 12, '计算机三级': 13, '计算机四级': 14
-        },
+          '计算机二级': 12, '计算机三级': 13, '计算机四级': 14},
         language_map: {'英语四/六级': 0, '托福': 1, '雅思': 2, '托业': 3},
-        fellowship_map: {'国家级 奖学金/学生干部/荣誉证书': 0, '省部级 奖学金/学生干部/荣誉证书': 1, '校级 奖学金/学生干部/荣誉证书': 2},
+        fellowship_map: {'国家级奖学金/学生干部/荣誉证书': 0, '省部级奖学金/学生干部/荣誉证书': 1, '校级奖学金/学生干部/荣誉证书': 2},
         other_map: {'国外交换经历': 0, '社会实践项目': 1, '国家一级运动员/演员': 2, '国家二级运动员/演员': 3, '省级运动员/演员': 4},
         target_map: {'赚钱': 0, '工作稳定': 1, '大城市户口': 2},
         preferred_job_map: {'投行业务': 0, '资产管理': 1, '商业银行': 2, '风险管理/合规': 3, '支持部门': 4},
@@ -648,7 +630,6 @@
         toShowTip: [true, true, true, true, true],
         showSearchUniversity: {0: false, 1: false, 2: false},
         showSearchCompany: {0: false, 1: false, 2: false},
-        showResult: false,
         resultScore: 0,
         form: {
           name: "金农",
@@ -683,15 +664,27 @@
       }
     },
     methods: {
+      isEmailOrChinaPhone(value){
+        return {
+          valid: /^([a-zA-Z0-9]+[_|\\_|\\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\\_|\\.]?)*[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$/.test(value) || /^1[34578]\d{9}$/.test(value),
+          msg: '请输入合法的邮箱或手机号码'
+        }
+      },
       submit() {
         this.$http.post(process.env.BACKEND_HOST_PORT + "/competitive/query/", this.form).then(({data}) => {
           console.log(data)
           this.resultScore = JSON.parse(data)["score"]
+          console.log(this.resultScore)
+          this.$vux.toast.show({
+            text: '您的求职竞争力为' + this.resultScore
+          })
         }).catch(({data}) => {
           console.log(data)
           this.resultScore = -1
-        }).finally(() => {
-          this.showResult = true
+          console.log(this.resultScore)
+          this.$vux.toast.show({
+            text: '服务器开小差去了'
+          })
         })
       },
       filterUniversity(results, val) {
@@ -730,24 +723,11 @@
   .demo1-item {
     border: 1px solid #ececec;
     padding: 5px 15px;
+    margin: 1px 1px;
   }
 
   .demo1-item-selected {
     border: 1px solid green;
-  }
-
-  .demo2-item {
-    width: 40px;
-    height: 40px;
-    border: 1px solid #ccc;
-    display: inline-block;
-    border-radius: 50%;
-    line-height: 40px;
-    text-align: center;
-  }
-
-  .demo2-item-selected {
-    border-color: green;
   }
 
   .demo-content {

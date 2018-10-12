@@ -34,6 +34,9 @@ const router = new VueRouter({
   routes
 })
 
+import  { ToastPlugin } from 'vux'
+Vue.use(ToastPlugin)
+
 FastClick.attach(document.body)
 
 Vue.config.productionTip = false

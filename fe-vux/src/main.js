@@ -49,3 +49,10 @@ new Vue({
 
 import VConsole from 'VConsole'
 var vConsole = new VConsole();
+
+import { WechatPlugin } from 'vux'
+Vue.use(WechatPlugin)
+
+console.log(Vue.wechat) // 可以直接访问 wx 对象。
+
+

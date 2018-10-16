@@ -159,7 +159,7 @@
     XInput
   } from 'vux'
 
-  import SearchU from './search'
+  import SearchU from '../search/searchLocal'
   import Panel from "vux/src/components/panel/index";
 
   export default {

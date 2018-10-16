@@ -1,21 +1,21 @@
 <template>
   <div v-transfer-dom>
     <tabbar style="position: fixed">
-      <tabbar-item>
+      <tabbar-item selected link="/">
         <img slot="icon" src="">
-        <span slot="label">Wechat</span>
+        <span slot="label">首页</span>
       </tabbar-item>
-      <tabbar-item show-dot>
+      <tabbar-item show-dot link="/article">
         <img slot="icon" src="">
-        <span slot="label">Message</span>
+        <span slot="label">文章</span>
       </tabbar-item>
-      <tabbar-item selected link="/component/demo">
+      <tabbar-item link="/lesson">
         <img slot="icon" src="">
-        <span slot="label">Explore</span>
+        <span slot="label">课程</span>
       </tabbar-item>
-      <tabbar-item badge="2">
+      <tabbar-item badge="2" link="/me">
         <img slot="icon" src="">
-        <span slot="label">News</span>
+        <span slot="label">我</span>
       </tabbar-item>
     </tabbar>
   </div>
